@@ -5,7 +5,7 @@ import ArtistCard from '../components/Artist-Card';
 export default function ArtistDeck({ artists, handleNext, handleBack }) {
   const cards = artists.map(artist => {
     return (
-      <li key={artist._id}>
+      <li key={artist.id}>
         <ArtistCard name={artist.name} />
       </li>
     );
