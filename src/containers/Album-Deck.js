@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import AlbumCard from '../components/Album-Card';
 import { getAlbums } from '../services/artist-api';
+import styles from './Album-Deck.css';
 
 export default class AlbumDeck extends Component {
   state = {
@@ -11,7 +12,22 @@ export default class AlbumDeck extends Component {
   }
 
   componentDidMount() {
-    getAlbums(this.props.match.params.id, this.state.page)
+    this.getReleases(this.state.page);
+  }
+
+  handleBack = () => {
+    const newPage = Math.max(1, this.state.page - 1);
+    this.getReleases(newPage);
+    this.setState({ page: newPage });
+  }
+
+  handleNext = () => {
+    this.getReleases(this.state.page + 1);
+    this.setState({ page: this.state.page + 1 });
+  }
+
+  getReleases = page => {
+    getAlbums(this.props.match.params.id, page)
       .then(({ releases }) => {
         this.setState({ albums: releases });
       });
@@ -29,7 +45,7 @@ export default class AlbumDeck extends Component {
 
 
     return (
-      <section>
+      <section className={styles.AlbumDeck}>
         <button onClick={this.handleBack}>Back</button>
         <h2>{this.state.name}</h2>
         <ul>

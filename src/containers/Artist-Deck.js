@@ -7,7 +7,7 @@ export default function ArtistDeck({ artists, handleNext, handleBack }) {
   const cards = artists.map(artist => {
     return (
       <li key={artist.id}>
-        <ArtistCard name={artist.name} />
+        <ArtistCard id={artist.id} name={artist.name} />
       </li>
     );
   });

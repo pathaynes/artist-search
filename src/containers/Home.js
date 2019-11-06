@@ -13,10 +13,7 @@ export default class Home extends Component {
 
   handleSubmit = event => {
     event.preventDefault();
-    getArtists(this.state.searchTerm, this.state.page)
-      .then(({ artists }) => {
-        this.setState({ artists });
-      });
+    this.getArtistsByPage(this.state.page);
   }
 
   handleChange = ({ target }) => {
@@ -25,19 +22,20 @@ export default class Home extends Component {
 
   handleBack = () => {
     const newPage = Math.max(1, this.state.page - 1);
-    getArtists(this.state.searchTerm, newPage)
-      .then(({ artists }) => {
-        this.setState({ artists });
-      });
+    this.getArtistsByPage(newPage);
     this.setState({ page: newPage });
   }
 
   handleNext = () => {
-    getArtists(this.state.searchTerm, this.state.page + 1)
+    this.getArtistsByPage(this.state.page + 1);
+    this.setState({ page: this.state.page + 1 });
+  }
+
+  getArtistsByPage = page => {
+    getArtists(this.state.searchTerm, page)
       .then(({ artists }) => {
         this.setState({ artists });
       });
-    this.setState({ page: this.state.page + 1 });
   }
 
   render() {

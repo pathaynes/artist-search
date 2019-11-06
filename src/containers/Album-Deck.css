@@ -1,4 +1,4 @@
-.ArtistDeck {
+.AlbumDeck {
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -22,9 +22,11 @@
   ul {
     width: 50em;
     text-align: center;
+    margin-top: 50px;
+    margin-bottom: 100px;
   }
   
-  a{
+  a, h2 {
     text-decoration: none;
     color: black;
     font-family: 'Questrial', sans-serif;
@@ -35,5 +37,10 @@
     color: #459DB4;
     cursor: pointer;
     text-decoration: none;
+  }
+
+  Img {
+    width: 15em;
+    padding: 2em;
   }
 }

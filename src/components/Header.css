@@ -4,6 +4,7 @@
   color: whitesmoke;
   height: 200px;
   position: relative;
+
   h1 {
     font-size: 50pt;
     padding: 40px;
@@ -12,6 +13,7 @@
     text-transform: uppercase;
     font-weight: 700;
   }
+
   nav {
     display: flex;
     align-items: center;
@@ -23,6 +25,7 @@
     position: absolute;
     bottom: 0;
   }
+
   a {
     text-decoration: none;
     color: whitesmoke;
