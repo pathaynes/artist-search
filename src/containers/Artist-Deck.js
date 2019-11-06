@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ArtistCard from '../components/Artist-Card';
+import styles from './Artist-Deck.css';
 
 export default function ArtistDeck({ artists, handleNext, handleBack }) {
   const cards = artists.map(artist => {
@@ -12,7 +13,7 @@ export default function ArtistDeck({ artists, handleNext, handleBack }) {
   });
 
   return (
-    <section>
+    <section className={styles.ArtistDeck}>
       <button onClick={handleBack}>Back</button>
       <ul>
         {cards}
