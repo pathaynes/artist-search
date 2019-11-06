@@ -1,12 +1,20 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import AlbumCard from '../components/Album-Card';
+import { getAlbums } from '../services/artist-api';
 
 export default class AlbumDeck extends Component {
   state = {
     albums: [],
     name: '',
     page: 1
+  }
+
+  componentDidMount() {
+    getAlbums(this.props.match.params.id, this.state.page)
+      .then(({ releases }) => {
+        this.setState({ albums: releases });
+      });
   }
 
   render() {

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import ArtistDeck from './Artist-Deck';
 import Search from '../components/Search';
-import getArtists from '../services/artist-api';
+import { getArtists } from '../services/artist-api';
 import styles from './Home.css';
 
 export default class Home extends Component {
