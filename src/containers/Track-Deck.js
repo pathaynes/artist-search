@@ -26,7 +26,7 @@ export default function TrackDeck({ match }) {
     <>
       <section className={styles.TrackDeck}>
         <h2>{match.params.album}</h2>
-        <h3>by: {match.params.artist}</h3>
+        <h3>{match.params.artist}</h3>
         <ul>
           {tracksDom}
         </ul>

@@ -1,13 +1,15 @@
 .Header {
   text-align: center;
-  background: #ab2576;
-  color: whitesmoke;
-  height: 200px;
+  background-image: url(../assets/glitter-bkgd.jpg);
+  background-repeat: none;
+  background-size: contain;
+  color: black;
+  height: 175px;
   position: relative;
 
   h1 {
     font-size: 50pt;
-    padding: 40px;
+    padding: 35px;
     font-family: 'Bowlby One SC', cursive;
     letter-spacing: .25em;
     text-transform: uppercase;
@@ -18,9 +20,9 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background: #296178;
+    background: #ab2576;
     color: whitesmoke;
-    height: 50px;
+    height: 40px;
     width: 100vw;
     position: absolute;
     bottom: 0;
@@ -30,6 +32,7 @@
     text-decoration: none;
     color: whitesmoke;
     font-family: 'Questrial', sans-serif;
+    text-transform: uppercase;
     letter-spacing: .25em;
     font-weight: 700;
   }

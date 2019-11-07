@@ -4,7 +4,7 @@
   align-items: center;
 
   h1 {
-    color: #e97e31;
+    color: #296178;
     font-family: 'Bowlby One SC', cursive;
     font-size: 35px;
     line-height: 1.1em;
@@ -15,18 +15,32 @@
     color: black;
     font-family: 'Questrial', sans-serif;
     line-height: 1.1em;
-    margin-bottom: 1em;
-    font-size: 20pt;
+    font-size: 18pt;
+    font-weight: 700;
   }
 
   pre {
+    margin-top: 1.5em;
     width: 50em;
     text-align: center;
     text-decoration: none;
     color: black;
     font-family: 'Questrial', sans-serif;
-    line-height: 1.1em;
+    line-height: 1.4em;
     margin-bottom: 100px;
+  }
+
+  p {
+    font-family: 'Questrial', sans-serif;
+    font-size: 18pt;
+    font-weight: 700;
+    margin-bottom: 1em;
+    margin-top: -1em;
+  }
+
+  img {
+    width: 400px;
+    border: black solid;
   }
 
 }

@@ -18,8 +18,9 @@ export default function Lyrics({ match }) {
   return (
     <>
       <div className={styles.Lyrics}>
-        <h1>Lyrics for {match.params.track}</h1>
-        <h2>by {match.params.artist} on the album {match.params.album}</h2>
+        <h1>&quot;{match.params.track}&quot;</h1>
+        <h2>Album: {match.params.album}</h2>
+        <h2>by {match.params.artist}</h2>
         <pre>{lyrics}</pre>
         {!lyrics &&
           <>
