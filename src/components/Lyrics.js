@@ -21,6 +21,11 @@ export default function Lyrics({ match }) {
         <h1>Lyrics for {match.params.track}</h1>
         <h2>by {match.params.artist} on the album {match.params.album}</h2>
         <pre>{lyrics}</pre>
+        {!lyrics &&
+          <>
+            <p>Sorry, no lyrics found!</p>
+            <img src="/src/assets/giphy.gif" />
+          </>}
       </div>
     </>
   );
