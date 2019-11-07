@@ -38,11 +38,10 @@ export default class AlbumDeck extends Component {
     const albumCovers = this.state.albums.map(album => {
       return (
         <li key={album.id}>
-          <AlbumCard title={album.title} release_id={album.id} />
+          <AlbumCard artist={this.props.match.params.artist} title={album.title} release_id={album.id} />
         </li>
       );
     });
-
 
     return (
       <section className={styles.AlbumDeck}>
@@ -59,7 +58,8 @@ export default class AlbumDeck extends Component {
   static propTypes = {
     match: PropTypes.shape({
       params: PropTypes.shape({
-        id: PropTypes.string.isRequired
+        id: PropTypes.string.isRequired,
+        artist: PropTypes.string.isRequired
       }).isRequired
     }).isRequired
   }

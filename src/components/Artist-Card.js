@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
 export default function ArtistCard({ id, name }) {
-  const linkPath = `/artist/${id}`;
+  const linkPath = `/artist/${name}/${id}`;
   return (
     <div>
       <h2>

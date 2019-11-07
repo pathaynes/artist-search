@@ -11,3 +11,9 @@ export function getAlbums(id, page) {
   return fetch(url)
     .then(res => res.json());
 }
+
+export function getTracks(id) {
+  const url = `http://musicbrainz.org/ws/2/recording?release=${id}&fmt=json`;
+  return fetch(url)
+    .then(res => res.json());
+}
