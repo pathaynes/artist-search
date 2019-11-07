@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import getLyrics from '../services/lyrics-api';
+import styles from './Lyrics.css';
 
 export default function Lyrics({ match }) {
 
@@ -16,9 +17,11 @@ export default function Lyrics({ match }) {
 
   return (
     <>
-      <h1>Lyrics for {match.params.track}</h1>
-      <h2>by {match.params.artist} on the album {match.params.album}</h2>
-      <pre>{lyrics}</pre>
+      <div className={styles.Lyrics}>
+        <h1>Lyrics for {match.params.track}</h1>
+        <h2>by {match.params.artist} on the album {match.params.album}</h2>
+        <pre>{lyrics}</pre>
+      </div>
     </>
   );
 }

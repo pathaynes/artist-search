@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import TrackCard from '../components/Track-Card';
 import { getTracks } from '../services/artist-api';
+import styles from './TrackDeck.css';
 
 export default function TrackDeck({ match }) {
   const [tracks, setTracks] = useState([]);
@@ -23,11 +24,13 @@ export default function TrackDeck({ match }) {
 
   return (
     <>
-      <h2>{match.params.album}</h2>
-      <h3>{match.params.artist}</h3>
-      <ul>
-        {tracksDom}
-      </ul>
+      <section className={styles.TrackDeck}>
+        <h2>{match.params.album}</h2>
+        <h3>by: {match.params.artist}</h3>
+        <ul>
+          {tracksDom}
+        </ul>
+      </section>
     </>
   );
 }
