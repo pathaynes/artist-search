@@ -1,24 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import ArtistDeck from './Artist-Deck';
 import Search from '../components/Search';
-import { getArtists } from '../services/artist-api';
+import { useArtists } from '../hooks/Artists';
+import { usePaging } from '../hooks/Paging';
 import styles from './Home.css';
 
 const Home = () => {
-  const [artists, setArtists] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [artistName, setArtistName] = useState('');
-  const [page, setPage] = useState(1);
-
-  useEffect(() => {
-    if(!searchTerm)
-      return;
-      
-    getArtists(artistName, page)
-      .then(({ artists }) => {
-        setArtists(artists);
-      });
-  }, [artistName, page]);
+  const { page, increment, decrement } = usePaging();
+  const artists = useArtists(artistName, page);
 
   const handleSubmit = event => {
     event.preventDefault();
@@ -29,15 +20,6 @@ const Home = () => {
     setSearchTerm(target.value);
   };
 
-  const handleBack = () => {
-    const newPage = Math.max(1, page - 1);
-    setPage(newPage);
-  };
-
-  const handleNext = () => {
-    setPage(page + 1);
-  };
-
   return (
     <div className={styles.Home}>
       <Search
@@ -45,8 +27,8 @@ const Home = () => {
         handleChange={handleChange} />
       <ArtistDeck
         artists={artists}
-        handleBack={handleBack}
-        handleNext={handleNext} />
+        handleBack={decrement}
+        handleNext={increment} />
     </div>
   );
 };

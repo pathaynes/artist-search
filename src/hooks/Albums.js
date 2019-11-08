@@ -2,8 +2,8 @@ import { useState, useEffect } from 'react';
 import { getAlbums } from '../services/artist-api';
 import { useParams } from 'react-router-dom';
 
-export const useAlbums = () => {
-  const [page] = useState(1);
+export const useAlbums = (page = 1) => {
+  // const [page] = useState(1);
   const [albums, setAlbums] = useState([]);
   let { id } = useParams();
 

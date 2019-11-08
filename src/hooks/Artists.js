@@ -1,17 +1,16 @@
 import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
 import { getArtists } from '../services/artist-api';
 
-export const useArtists = () => {
-  const [name, setName] = useState([]);
-  const { id } = useParams();
+export const useArtists = (searchTerm, page) => {
+  const [artists, setArtists] = useState([]);
 
   useEffect(() => {
-    getArtists(id)
+    if(!searchTerm) return;
+    getArtists(searchTerm, page)
       .then(({ artists }) => {
-        setName(artists);
+        setArtists(artists);
       });
-  }, [id]);
+  }, [searchTerm, page]);
 
-  return [name, id];
+  return artists;
 };
