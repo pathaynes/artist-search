@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Img from 'react-image';
 import { Link } from 'react-router-dom';
+import './Album-Card.css';
 
 export default function AlbumCard({ title, release_id, artist }) {
   const imgUrl = `http://coverartarchive.org/release/${release_id}/front`;

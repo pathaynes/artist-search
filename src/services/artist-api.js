@@ -6,7 +6,7 @@ export function getArtists(search, page) {
 }
 
 export function getAlbums(id, page) {
-  const perPage = 4;
+  const perPage = 6;
   const url = `http://musicbrainz.org/ws/2/release?artist=${id}&fmt=json&limit=${perPage}&offset=${perPage * (page - 1)}`;
   return fetch(url)
     .then(res => res.json());

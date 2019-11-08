@@ -1,54 +1,54 @@
-import React, { Component } from 'react';
+import React, { useEffect, useState } from 'react';
 import ArtistDeck from './Artist-Deck';
 import Search from '../components/Search';
 import { getArtists } from '../services/artist-api';
 import styles from './Home.css';
 
-export default class Home extends Component {
-  state = {
-    artists: [],
-    searchTerm: '',
-    page: 1
+const Home = () => {
+  const [artists, setArtists] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [artistName, setArtistName] = useState('');
+  const [page, setPage] = useState(1);
+
+  useEffect(() => {
+    if(!searchTerm)
+      return;
+      
+    getArtists(artistName, page)
+      .then(({ artists }) => {
+        setArtists(artists);
+      });
+  }, [artistName, page]);
+
+  const handleSubmit = event => {
+    event.preventDefault();
+    setArtistName(searchTerm);
   };
 
-  handleSubmit = event => {
-    event.preventDefault();
-    this.getArtistsByPage(this.state.page);
-  }
+  const handleChange = ({ target }) => {
+    setSearchTerm(target.value);
+  };
 
-  handleChange = ({ target }) => {
-    this.setState({ searchTerm: target.value });
-  }
+  const handleBack = () => {
+    const newPage = Math.max(1, page - 1);
+    setPage(newPage);
+  };
 
-  handleBack = () => {
-    const newPage = Math.max(1, this.state.page - 1);
-    this.getArtistsByPage(newPage);
-    this.setState({ page: newPage });
-  }
+  const handleNext = () => {
+    setPage(page + 1);
+  };
 
-  handleNext = () => {
-    this.getArtistsByPage(this.state.page + 1);
-    this.setState({ page: this.state.page + 1 });
-  }
+  return (
+    <div className={styles.Home}>
+      <Search
+        handleSubmit={handleSubmit}
+        handleChange={handleChange} />
+      <ArtistDeck
+        artists={artists}
+        handleBack={handleBack}
+        handleNext={handleNext} />
+    </div>
+  );
+};
 
-  getArtistsByPage = page => {
-    getArtists(this.state.searchTerm, page)
-      .then(({ artists }) => {
-        this.setState({ artists });
-      });
-  }
-
-  render() {
-    return (
-      <div className={styles.Home}>
-        <Search
-          handleSubmit={this.handleSubmit}
-          handleChange={this.handleChange} />
-        <ArtistDeck
-          artists={this.state.artists}
-          handleBack={this.handleBack}
-          handleNext={this.handleNext} />
-      </div>
-    );
-  }
-}
+export default Home;
