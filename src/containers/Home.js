@@ -1,54 +1,36 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import ArtistDeck from './Artist-Deck';
 import Search from '../components/Search';
-import { getArtists } from '../services/artist-api';
+import { useArtists } from '../hooks/Artists';
+import { usePaging } from '../hooks/Paging';
 import styles from './Home.css';
 
-export default class Home extends Component {
-  state = {
-    artists: [],
-    searchTerm: '',
-    page: 1
+const Home = () => {
+  const [searchTerm, setSearchTerm] = useState('');
+  const [artistName, setArtistName] = useState('');
+  const { page, increment, decrement } = usePaging();
+  const artists = useArtists(artistName, page);
+
+  const handleSubmit = event => {
+    event.preventDefault();
+    setArtistName(searchTerm);
   };
 
-  handleSubmit = event => {
-    event.preventDefault();
-    this.getArtistsByPage(this.state.page);
-  }
+  const handleChange = ({ target }) => {
+    setSearchTerm(target.value);
+  };
 
-  handleChange = ({ target }) => {
-    this.setState({ searchTerm: target.value });
-  }
+  return (
+    <div className={styles.Home}>
+      <Search
+        handleSubmit={handleSubmit}
+        handleChange={handleChange} />
+      <ArtistDeck
+        artists={artists}
+        handleBack={decrement}
+        handleNext={increment} />
+    </div>
+  );
+};
 
-  handleBack = () => {
-    const newPage = Math.max(1, this.state.page - 1);
-    this.getArtistsByPage(newPage);
-    this.setState({ page: newPage });
-  }
-
-  handleNext = () => {
-    this.getArtistsByPage(this.state.page + 1);
-    this.setState({ page: this.state.page + 1 });
-  }
-
-  getArtistsByPage = page => {
-    getArtists(this.state.searchTerm, page)
-      .then(({ artists }) => {
-        this.setState({ artists });
-      });
-  }
-
-  render() {
-    return (
-      <div className={styles.Home}>
-        <Search
-          handleSubmit={this.handleSubmit}
-          handleChange={this.handleChange} />
-        <ArtistDeck
-          artists={this.state.artists}
-          handleBack={this.handleBack}
-          handleNext={this.handleNext} />
-      </div>
-    );
-  }
-}
+export default Home;

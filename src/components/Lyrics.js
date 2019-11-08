@@ -1,25 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import getLyrics from '../services/lyrics-api';
+import { useLyrics } from '../hooks/Lyrics';
 import styles from './Lyrics.css';
 
 export default function Lyrics({ match }) {
-
-  const [lyrics, setLyrics] = useState('');
-
-  useEffect(() => {
-    getLyrics(match.params.artist, match.params.track)
-      .then(({ lyrics }) => {
-        setLyrics(lyrics);
-      });
-  }, [match.params.artist, match.params.track]);
-
+  const lyrics = useLyrics();
 
   return (
     <>
       <div className={styles.Lyrics}>
-        <h1>Lyrics for {match.params.track}</h1>
-        <h2>by {match.params.artist} on the album {match.params.album}</h2>
+        <h1>&quot;{match.params.track}&quot;</h1>
+        <h2>Album: {match.params.album}</h2>
+        <h2>by {match.params.artist}</h2>
         <pre>{lyrics}</pre>
         {!lyrics &&
           <>

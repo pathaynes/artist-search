@@ -6,6 +6,7 @@ import Home from '../containers/Home';
 import AlbumDeck from '../containers/Album-Deck';
 import TrackDeck from '../containers/Track-Deck';
 import Lyrics from '../components/Lyrics';
+import './App.css';
 
 export default function App() {
   return (
