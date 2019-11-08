@@ -1,67 +1,55 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import AlbumCard from '../components/Album-Card';
 import { getAlbums } from '../services/artist-api';
 import styles from './Album-Deck.css';
+import { usePaging } from './Paging';
 
-export default class AlbumDeck extends Component {
-  state = {
-    albums: [],
-    name: '',
-    page: 1
-  }
+export default function AlbumDeck() {
 
-  componentDidMount() {
-    this.getReleases(this.state.page);
-  }
+  const [albums, setAlbums] = useState([]);
+  const [name] = useState('');
+  const { artist, id } = useParams();
+  const { page, handleNext, handleBack } = usePaging();
 
-  handleBack = () => {
-    const newPage = Math.max(1, this.state.page - 1);
-    this.getReleases(newPage);
-    this.setState({ page: newPage });
-  }
+  useEffect(() => {
+    getReleases(page);
+  }, [page]);
 
-  handleNext = () => {
-    this.getReleases(this.state.page + 1);
-    this.setState({ page: this.state.page + 1 });
-  }
-
-  getReleases = page => {
-    getAlbums(this.props.match.params.id, page)
+  const getReleases = page => {
+    getAlbums(id, page)
       .then(({ releases }) => {
-        this.setState({ albums: releases });
+        setAlbums(releases);
       });
-  }
+  };
 
-  render() {
-
-    const albumCovers = this.state.albums.map(album => {
-      return (
-        <li key={album.id}>
-          <AlbumCard artist={this.props.match.params.artist} title={album.title} release_id={album.id} />
-        </li>
-      );
-    });
-
+  const albumCovers = albums.map(album => {
     return (
-      <section className={styles.AlbumDeck}>
-        <button onClick={this.handleBack}>Back</button>
-        <h2>{this.state.name}</h2>
-        <ul>
-          {albumCovers}
-        </ul>
-        <button onClick={this.handleNext}>Next</button>
-      </section>
+      <li key={album.id}>
+        <AlbumCard artist={artist} title={album.title} release_id={album.id} />
+      </li>
     );
-  }
+  });
 
-  static propTypes = {
-    match: PropTypes.shape({
-      params: PropTypes.shape({
-        id: PropTypes.string.isRequired,
-        artist: PropTypes.string.isRequired
-      }).isRequired
-    }).isRequired
-  }
+  return (
+    <section className={styles.AlbumDeck}>
+      <button onClick={handleBack}>Back</button>
+      <h2>{name}</h2>
+      <ul>
+        {albumCovers}
+      </ul>
+      <button onClick={handleNext}>Next</button>
+    </section>
+  );
 
 }
+
+AlbumDeck.propTypes = {
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      artist: PropTypes.string.isRequired
+    }).isRequired
+  }).isRequired
+};
