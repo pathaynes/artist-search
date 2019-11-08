@@ -1,13 +1,21 @@
 import { useState, useEffect } from 'react';
 import { getAlbums } from '../services/artist-api';
+import { useParams } from 'react-router-dom';
 
-export const useAlbums = (page = 1) => {
+export const useAlbums = () => {
+  const [page] = useState(1);
   const [albums, setAlbums] = useState([]);
+  let { id } = useParams();
 
   useEffect(() => {
-    getAlbums(page)
-      .then(fetchedAlbums => setAlbums(fetchedAlbums));
+    getReleases(page);
   }, [page]);
 
-  return albums;
+  const getReleases = page => {
+    getAlbums(id, page)
+      .then(({ releases }) => {
+        setAlbums(releases);
+      });
+  };
+  return [albums, page, id];
 };

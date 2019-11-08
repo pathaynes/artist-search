@@ -1,19 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
+import { useParams } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import AlbumCard from '../components/Album-Card';
-import { getAlbums } from '../services/artist-api';
+import { useAlbums } from '../hooks/Albums';
 import styles from './Album-Deck.css';
 
-const AlbumDeck = ({ match }) => {
-  const [albums, setAlbums] = useState([]);
+export default function AlbumDeck() {
+  const [name] = useState('');
   const [page, setPage] = useState(1);
+  let { artist } = useParams();
 
-  useEffect(() => {
-    getAlbums(match.params.id, page)
-      .then(({ releases }) => {
-        setAlbums(releases);
-      });
-  }, [page]);
+  const albums = useAlbums();
 
   const handleBack = () => {
     const newPage = Math.max(1, page - 1);
@@ -24,10 +21,10 @@ const AlbumDeck = ({ match }) => {
     setPage(page + 1);
   };
 
-  const albumCovers = albums.map(album => {
+  const albumCovers = albums[0].map(album => {
     return (
       <li key={album.id}>
-        <AlbumCard artist={match.params.artist} title={album.title} release_id={album.id} />
+        <AlbumCard artist={artist} title={album.title} release_id={album.id} />
       </li>
     );
   });
@@ -36,13 +33,13 @@ const AlbumDeck = ({ match }) => {
     <section className={styles.AlbumDeck}>
       <button onClick={handleBack}>Back</button>
       <ul>
-        <h1>{match.params.artist}</h1>
+        <h1>{name}</h1>
         {albumCovers}
       </ul>
       <button onClick={handleNext}>Next</button>
     </section>
   );
-};
+}
 
 AlbumDeck.propTypes = {
   match: PropTypes.shape({
@@ -52,5 +49,3 @@ AlbumDeck.propTypes = {
     }).isRequired
   }).isRequired
 };
-
-export default AlbumDeck;
