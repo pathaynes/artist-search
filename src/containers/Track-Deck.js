@@ -1,20 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import TrackCard from '../components/Track-Card';
-import { getTracks } from '../services/artist-api';
+import { useTracks } from '../hooks/Tracks';
 import styles from './TrackDeck.css';
 
 export default function TrackDeck({ match }) {
-  const [tracks, setTracks] = useState([]);
+  const tracks = useTracks();
 
-  useEffect(() => {
-    getTracks(match.params.id)
-      .then(({ recordings }) => {
-        setTracks(recordings);
-      });
-  }, [match.params.id]);
-
-  const tracksDom = tracks.map(track => {
+  const tracksDom = tracks[0].map(track => {
     return (
       <li key={track.id} >
         <TrackCard album={match.params.album} trackName={track.title} artist={match.params.artist} />
@@ -26,7 +19,7 @@ export default function TrackDeck({ match }) {
     <>
       <section className={styles.TrackDeck}>
         <h2>{match.params.album}</h2>
-        <h3>{match.params.artist}</h3>
+        <h3>by: {match.params.artist}</h3>
         <ul>
           {tracksDom}
         </ul>
